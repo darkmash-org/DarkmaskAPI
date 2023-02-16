@@ -1,5 +1,8 @@
 # DarkmaskAPI
 
+<p class="views" align="right"><img src="https://komarev.com/ghpvc/?username=darkmash-org-darkmask.api&label=Project%20views&color=0e75b6&style=flat" alt="darkmash-org" /></p>
+
+
 ## About :
 
 An API for masking Urls..

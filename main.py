@@ -15,7 +15,7 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 def encode_url(url):
-  return zlib.compress(url.encode()).hex()
+  return zlib.compress(url.encode(), level=9).hex()
 
 def decode_url(url):
   return zlib.decompress(bytes.fromhex(url)).decode()

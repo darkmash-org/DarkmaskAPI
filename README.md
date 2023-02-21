@@ -31,3 +31,14 @@ To use the service [GET - method] ,
 ### On visiting (main page):
 
 ![Alt text](https://cdn.discordapp.com/attachments/951417646191083551/1075808861216325694/image.png?raw=true "main-page")
+
+<hr>
+<details>
+    <summary><b>✨Discord Server & Support</b></summary><br/>
+ <h3 align="center">Darkmash Official Server </h3>
+ 
+### ⬇️ ⬇️ ⬇️ ⬇️ INVITE LINK ⬇️ ⬇️ ⬇️ ⬇️ 
+
+https://discord.gg/SC54bSgnyQ
+</details>
+

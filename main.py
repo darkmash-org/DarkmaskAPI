@@ -9,8 +9,8 @@ import logging
 import random
 import string
 import os
-
-
+import json
+import atexit
 
 
 app = Flask(__name__)
@@ -19,11 +19,15 @@ CORS(app)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-
-URLS = {}
+try:
+  db = open("db.json", "r")
+  URLS =json.loads(db.read())
+  db.close()
+except:
+  db = {}
 
 def encode_url(url):
-  print("..NEW..USER..")
+  print(f"ENCODE : URL : {url}")
   while True:
     result = ''.join((random.choice(string.ascii_lowercase) for x in range(8)))
     try:
@@ -36,6 +40,7 @@ def encode_url(url):
 def decode_url(url):
   if URLS[url] == None:
     return False
+  print(f"DECODE : URL : {URLS[url]}")
   return URLS[url]
 
 @app.route('/')
@@ -94,6 +99,15 @@ location.href = 'https://{url}';
   """
   except:
     return "Invalid Url.."
-
-
+def exit_():
+  print("EXITING")
+  try:
+    db = open("db.json", "r")
+  except:
+    db = open("db.json", "x")
+  db.write(json.dumps(URLS))
+  db.close()
+  print("URLS - SAVED")
+  
+atexit.register(exit_)
 app.run(host="0.0.0.0", port=8080)

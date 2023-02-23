@@ -8,9 +8,7 @@ from flask_cors import CORS
 import logging
 import random
 import string
-import os
 import json
-import atexit
 
 
 app = Flask(__name__)
@@ -19,29 +17,40 @@ CORS(app)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-try:
+def read():
   db = open("db.json", "r")
   URLS =json.loads(db.read())
-  db.close()
-except:
-  URLS = {}
+  db.close()  
+  return URLS
+
+def write(new):
+  db = open("db.json", "w")
+  db.write(json.dumps(new))
+  db.close()  
+
+def set(a,b):
+  db = read()
+  print(db)
+  db[a] = b
+  write(db)
 
 def encode_url(url):
   print(f"ENCODE : URL : {url}")
   while True:
     result = ''.join((random.choice(string.ascii_lowercase) for x in range(8)))
     try:
-      URLS[result]
+      read()[result]
     except:
-      break
-  URLS.setdefault(result, url)
+      break 
+  set(result, url)
   return result
 
 def decode_url(url):
-  if URLS[url] == None:
+  url_ = read()
+  if url_[url] == None:
     return False
-  print(f"DECODE : URL : {URLS[url]}")
-  return URLS[url]
+  print(f"DECODE : URL : {url_[url]}")
+  return url_[url]
 
 @app.route('/')
 def main_func_():
@@ -99,15 +108,5 @@ location.href = 'https://{url}';
   """
   except:
     return "Invalid Url.."
-def exit_():
-  print("EXITING")
-  try:
-    db = open("db.json", "r")
-  except:
-    db = open("db.json", "x")
-  db.write(json.dumps(URLS))
-  db.close()
-  print("URLS - SAVED")
-  
-atexit.register(exit_)
+
 app.run(host="0.0.0.0", port=8080)

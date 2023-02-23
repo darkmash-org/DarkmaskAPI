@@ -30,7 +30,6 @@ def write(new):
 
 def set(a,b):
   db = read()
-  print(db)
   db[a] = b
   write(db)
 

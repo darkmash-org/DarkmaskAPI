@@ -24,7 +24,7 @@ try:
   URLS =json.loads(db.read())
   db.close()
 except:
-  db = {}
+  URLS = {}
 
 def encode_url(url):
   print(f"ENCODE : URL : {url}")

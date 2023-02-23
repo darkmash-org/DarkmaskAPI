@@ -6,7 +6,12 @@ By ~ Darkmash
 from flask import Flask, request
 from flask_cors import CORS
 import logging
-import zlib
+import random
+import string
+import os
+
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -14,11 +19,24 @@ CORS(app)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
+
+URLS = {}
+
 def encode_url(url):
-  return zlib.compress(url.encode(), level=9).hex()
+  print("..NEW..USER..")
+  while True:
+    result = ''.join((random.choice(string.ascii_lowercase) for x in range(8)))
+    try:
+      URLS[result]
+    except:
+      break
+  URLS.setdefault(result, url)
+  return result
 
 def decode_url(url):
-  return zlib.decompress(bytes.fromhex(url)).decode()
+  if URLS[url] == None:
+    return False
+  return URLS[url]
 
 @app.route('/')
 def main_func_():
@@ -55,9 +73,13 @@ def get():
 
 
 @app.route('/<url>')
-def random(url):
+def random_(url):
   try:
     url = decode_url(url)
+    if url == False:
+      return f"""
+      ERROR : Site Not Found
+      """
     if "https://" in url :
       return f"""
   <script>
